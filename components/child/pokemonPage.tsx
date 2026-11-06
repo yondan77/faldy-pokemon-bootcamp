@@ -48,6 +48,7 @@ export default function PokemonPage() {
     }, [pokeNumber]);
 
 
+
     useEffect(() => {
         fetch("https://pokeapi.co/api/v2/pokemon/?limit=100000")
             .then(response => response.json())
@@ -82,7 +83,7 @@ export default function PokemonPage() {
                     </div>
                     <input type="text" id="search" value={search} onChange={(e) => setSearch(e.target.value)} className="text-black block w-full p-3 ps-9 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body" placeholder="Search Pokemon..." required />
                 </div>
-                {filteredPokes.length >= 1 ? <div className="text-black">Menampilkan hasil: {filteredPokes.length} Poke</div> : <></>}
+                {search != "" ? <div className="text-black">Kata kunci <strong>&quot;{search}&quot;</strong> Menampilkan hasil pencarian: {filteredPokes.length} Poke dari {allPokes.length}</div> : <div className="text-black">Menampilkan: {pokes.length} Poke dari {allPokes.length}</div>}
             </form>
 
 
@@ -135,7 +136,7 @@ export default function PokemonPage() {
             )}
 
             <div className="container py-10 px-10 mx-0 min-w-full flex flex-col items-center">
-{filteredPokes.length <= 1 ? <button
+{search == "" ? <button
                     onClick={countNumber}
                     className="bg-purple-900 text-white hover:bg-blue-400 font-bold py-2 px-4 mt-3 rounded"
                 >
