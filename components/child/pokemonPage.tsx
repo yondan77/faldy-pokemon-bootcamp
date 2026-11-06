@@ -87,7 +87,7 @@ export default function PokemonPage() {
 
 
             {debouncedSearch.trim() !== "" ? (
-                <ul className="grid grid-cols-4 gap-1 p-10">
+                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1 p-4 sm:p-6 lg:p-10">
 
                     {filteredPokes.length > 0 ? (
                         filteredPokes.map((post) => (
@@ -115,7 +115,7 @@ export default function PokemonPage() {
             ) : (
 
                 // Menampilkan Pokémon utama
-                <ul className="grid grid-cols-4 gap-1 p-10">
+                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1 p-4 sm:p-6 lg:p-10">
                     {pokes.map((post) => (
                         <li
                             className="bg-gray-100 p-6 rounded-2xl m-2 transition delay-100 duration-150 ease-in-out hover:bg-gray-300"
