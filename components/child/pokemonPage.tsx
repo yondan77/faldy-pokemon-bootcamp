@@ -75,6 +75,10 @@ export default function PokemonPage() {
 
     return (
         <div className="bg-white w-screen">
+            <div className="container py-10 px-10 mx-0 min-w-full flex flex-col items-center">
+                <div className="font-extrabold text-4xl text-black">POKEMON</div>
+            </div>
+            
             <form className="max-w-md mx-auto mt-5">
                 <label className="block mb-2.5 text-sm font-medium text-heading sr-only ">Search</label>
                 <div className="relative">
@@ -83,7 +87,7 @@ export default function PokemonPage() {
                     </div>
                     <input type="text" id="search" value={search} onChange={(e) => setSearch(e.target.value)} className="text-black block w-full p-3 ps-9 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body" placeholder="Search Pokemon..." required />
                 </div>
-                {search != "" ? <div className="text-black">Kata kunci <strong>&quot;{search}&quot;</strong> Menampilkan hasil pencarian: {filteredPokes.length} Poke dari {allPokes.length}</div> : <div className="text-black">Menampilkan: {pokes.length} Poke dari {allPokes.length}</div>}
+                {search != "" ? <div className="text-black">Kata kunci <strong>&quot;{search}&quot;</strong> menampilkan hasil pencarian: {filteredPokes.length} Poke dari {allPokes.length}</div> : <div className="text-black">Menampilkan: {pokes.length} Poke dari {allPokes.length}</div>}
             </form>
 
 
