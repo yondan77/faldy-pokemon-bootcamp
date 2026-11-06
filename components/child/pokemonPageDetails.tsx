@@ -33,7 +33,7 @@ export default function PokemonPageDetails({ namePoke, urlDetailsPoke }: Props) 
     fetch(urlDetailsPoke)
       .then((res) => res.json())
       .then((data) => {
-        setImage(data.sprites.other.home.front_shiny)
+        setImage(data.sprites.other.home.front_default)
         setTypes(data.types)
         setStats(data.stats)
 
