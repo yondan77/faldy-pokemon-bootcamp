@@ -76,7 +76,7 @@ export default function PokemonPage() {
     return (
         <div className="bg-white w-screen">
             <div className="container py-10 px-10 mx-0 min-w-full flex flex-col items-center">
-                <div className="font-extrabold text-4xl text-black">POKEMON</div>
+                <div className=" text-4x bg-linear-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent animate-gradient font-extrabold text-5xl">POKEMON</div>
             </div>
             
             <form className="max-w-md mx-auto mt-5">
