@@ -85,7 +85,7 @@ export default function PokemonPage() {
                     <div className="absolute inset-y-0 inset-s-0 flex items-center ps-3 pointer-events-none">
                         <svg className="w-4 h-4 text-body text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" /></svg>
                     </div>
-                    <input type="text" id="search" value={search} onChange={(e) => setSearch(e.target.value)} className="text-black block w-full p-3 ps-9 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body" placeholder="Search Pokemon..." required />
+                    <input type="text" id="search" value={search} onChange={(e) => setSearch(e.target.value)} className="rounded-3xl text-black block w-full p-3 ps-9 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body" placeholder="Search Pokemon..." required />
                 </div>
                 {search != "" ? <div className="text-black">Kata kunci <strong>&quot;{search}&quot;</strong> menampilkan hasil pencarian: {filteredPokes.length} Poke dari {allPokes.length}</div> : <div className="text-black">Menampilkan: {pokes.length} Poke dari {allPokes.length}</div>}
             </form>
