@@ -82,6 +82,7 @@ export default function PokemonPage() {
                     </div>
                     <input type="text" id="search" value={search} onChange={(e) => setSearch(e.target.value)} className="text-black block w-full p-3 ps-9 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body" placeholder="Search Pokemon..." required />
                 </div>
+                {filteredPokes.length >= 1 ? <div className="text-black">Menampilkan hasil: {filteredPokes.length} Poke</div> : <></>}
             </form>
 
 
@@ -134,13 +135,13 @@ export default function PokemonPage() {
             )}
 
             <div className="container py-10 px-10 mx-0 min-w-full flex flex-col items-center">
-
-                <button
+{filteredPokes.length <= 1 ? <button
                     onClick={countNumber}
                     className="bg-purple-900 text-white hover:bg-blue-400 font-bold py-2 px-4 mt-3 rounded"
                 >
                     Load More
-                </button>
+                </button> : <></>}
+               
             </div>
         </div>
     );
