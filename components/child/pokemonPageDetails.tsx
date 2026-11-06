@@ -47,7 +47,7 @@ export default function PokemonPageDetails({ namePoke, urlDetailsPoke }: Props) 
       {/* <pre className="text-black">
                 {JSON.stringify(types, null, 2)}
             </pre> */}
-      {imageUrl ? <img className="bg-gray-200 rounded-2xl" src={imageUrl || null} alt="image" />
+      {imageUrl ? <img className="bg-gray-200 rounded-2xl" src={imageUrl} alt="image" />
         : <div className="text-black bg-gray-200 rounded-2xl p-10 text-center font-extrabold">404</div>}
       <div className="text-black text-center font-semibold uppercase">TYPE:</div>
       <div>
