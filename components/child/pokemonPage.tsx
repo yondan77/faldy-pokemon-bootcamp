@@ -33,10 +33,13 @@ export default function PokemonPage() {
     const [search, setSearch] = useState("");
 
     const debouncedSearch = useDebounce(search, 500);
+    const [isWaiting, setIsWaiting] = useState(false);
+
 
     function countNumber() {
         setAddNumber(prev => prev + 20);
     }
+
 
 
     useEffect(() => {
@@ -62,14 +65,23 @@ export default function PokemonPage() {
 
         if (!keyword) {
             setPokeFilter([]);
+            setIsWaiting(false);
             return;
         }
 
-        const result = allPokes.filter(item =>
-            item.name.toLowerCase().includes(keyword)
-        );
+        setIsWaiting(true);
 
-        setPokeFilter(result);
+        const timer = setTimeout(() => {
+            const result = allPokes.filter(item =>
+                item.name.toLowerCase().includes(keyword)
+            );
+
+            setPokeFilter(result);
+            setIsWaiting(false);
+        }, 500);
+
+        // Batalkan timer jika keyword berubah
+        return () => clearTimeout(timer);
 
     }, [debouncedSearch, allPokes]);
 
@@ -78,7 +90,6 @@ export default function PokemonPage() {
             <div className="container py-10 px-10 mx-0 min-w-full flex flex-col items-center">
                 <div className=" text-4x bg-linear-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent animate-gradient font-extrabold text-5xl">POKEMON</div>
             </div>
-            
             <form className="max-w-md mx-auto mt-5">
                 <label className="block mb-2.5 text-sm font-medium text-heading sr-only ">Search</label>
                 <div className="relative">
@@ -92,34 +103,38 @@ export default function PokemonPage() {
 
 
             {debouncedSearch.trim() !== "" ? (
-                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1 p-4 sm:p-6 lg:p-10">
+                <>
+                    {isWaiting == false ? (
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1 p-4 sm:p-6 lg:p-10">
 
-                    {filteredPokes.length > 0 ? (
-                        filteredPokes.map((post) => (
-                            <li
-                                className="bg-gray-100 p-6 rounded-2xl m-2 transition delay-100 duration-150 ease-in-out hover:bg-gray-300"
-                                key={post.name}
-                            >
-                                <div className="text-black text-center font-extrabold uppercase">
-                                    {post.name}
-                                </div>
+                            {filteredPokes.length > 0 ? (
+                                filteredPokes.map((post) => (
+                                    <li
+                                        className="bg-gray-100 p-6 rounded-2xl m-2 transition delay-100 duration-150 ease-in-out hover:bg-gray-300"
+                                        key={post.name}
+                                    >
+                                        <div className="text-black text-center font-extrabold uppercase">
+                                            {post.name}
+                                        </div>
 
-                                <PokemonPageDetails
-                                    urlDetailsPoke={post.url}
-                                    namePoke={post.name}
-                                />
-                            </li>
-                        ))
+                                        <PokemonPageDetails
+                                            urlDetailsPoke={post.url}
+                                            namePoke={post.name}
+                                        />
+                                    </li>
+                                ))
+                            ) : (
+                                <li className="col-span-5 text-center text-black">
+                                    Pokémon tidak ditemukan.
+                                </li>
+                            )}
+
+                        </ul>
                     ) : (
-                        <li className="col-span-5 text-center text-black">
-                            Pokémon tidak ditemukan.
-                        </li>
+                        <Skeleton />
                     )}
-
-                </ul>
+                </>
             ) : (
-
-                // Menampilkan Pokémon utama
                 <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1 p-4 sm:p-6 lg:p-10">
                     {pokes.map((post) => (
                         <li
@@ -140,14 +155,34 @@ export default function PokemonPage() {
             )}
 
             <div className="container py-10 px-10 mx-0 min-w-full flex flex-col items-center">
-{search == "" ? <button
+                {search == "" ? <button
                     onClick={countNumber}
                     className="bg-purple-900 text-white hover:bg-blue-400 font-bold py-2 px-4 mt-3 rounded"
                 >
                     Load More
                 </button> : <></>}
-               
+
             </div>
+        </div>
+    );
+}
+
+
+function Skeleton() {
+    return (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1 p-4 sm:p-6 lg:p-10">
+            <div className="m-2 rounded-xl bg-gray-100 p-2 h-72"></div>
+            <div className="m-2 rounded-xl bg-gray-100 p-2 h-72"></div>
+            <div className="m-2 rounded-xl bg-gray-100 p-2 h-72"></div>
+            <div className="m-2 rounded-xl bg-gray-100 p-2 h-72"></div>
+            <div className="m-2 rounded-xl bg-gray-100 p-2 h-72"></div>
+            <div className="m-2 rounded-xl bg-gray-100 p-2 h-72"></div>
+            <div className="m-2 rounded-xl bg-gray-100 p-2 h-72"></div>
+            <div className="m-2 rounded-xl bg-gray-100 p-2 h-72"></div>
+            <div className="m-2 rounded-xl bg-gray-100 p-2 h-72"></div>
+            <div className="m-2 rounded-xl bg-gray-100 p-2 h-72"></div>
+            <div className="m-2 rounded-xl bg-gray-100 p-2 h-72"></div>
+            <div className="m-2 rounded-xl bg-gray-100 p-2 h-72"></div>
         </div>
     );
 }
