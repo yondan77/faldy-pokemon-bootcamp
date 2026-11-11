@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState,  } from "react";
+import { useEffect, useState, } from "react";
 
 interface Props {
   urlDetailsPoke: string;
@@ -31,107 +31,110 @@ export default function PokemonPageDetails({ namePoke, urlDetailsPoke }: Props) 
     }
   }
 
-useEffect(() => {
-  if (!urlDetailsPoke) return;
+  useEffect(() => {
+    if (!urlDetailsPoke) return;
 
-  setError("");
+    setError("");
 
-  fetch(urlDetailsPoke)
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error(`HTTP Error: ${res.status}`);
-      }
+    fetch(urlDetailsPoke)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP Error: ${res.status}`);
+        }
 
-      return res.json();
-    })
-    .then((data) => {
-      setImage(data.sprites.other.home.front_default);
-      setTypes(data.types);
-      setStats(data.stats);
-    })
-    .catch((error) => {
-      console.error("Fetch error:", error);
-      console.log(urlDetailsPoke)
+        return res.json();
+      })
+      .then((data) => {
+        setImage(data.sprites.other.home.front_default);
+        setTypes(data.types);
+        setStats(data.stats);
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
+        console.log(urlDetailsPoke)
 
-      setError(error.message);
+        setError(error.message);
 
-      setImage("");
-      setTypes([]);
-      setStats([]);
-    });
-}, [urlDetailsPoke]);
+        setImage("");
+        setTypes([]);
+        setStats([]);
+      });
+  }, [urlDetailsPoke]);
 
 
-return (
-  <div onClick={OpenToggleStats} >
-    {/* <pre className="text-black">
+  return (
+    <div onClick={OpenToggleStats} >
+      {/* <pre className="text-black">
                 {JSON.stringify(types, null, 2)}
             </pre> */}
-    {imageUrl ? <img className="bg-gray-200 rounded-2xl" src={imageUrl} alt="image" />
-      : <div className="text-black bg-gray-200 rounded-2xl p-10 text-center font-extrabold"></div>}
-    <div className="text-black text-center font-semibold uppercase">TYPE:</div>
-    <div>
-      <ul>
-        {types?.map((post: any) => (
-          <li key={post.type.name} className="text-black text-center font-medium uppercase">{post.type.name}</li>
-        ))}
-      </ul>
-      <ul>
-        {isVisible == true && (
-          <>
-            <div
-              data-dialog-backdrop="modal"
-              data-dialog-backdrop-close="true"
-              className="fixed inset-0 z-999 grid h-screen w-screen place-items-center bg-black/30 backdrop-blur-sm p-4"
-            >
+      {imageUrl ?
+        <div className="rounded-2xl m-2 flex flex-col items-center">
+          <img className="bg-gray-200 rounded-2xl w-full" src={imageUrl} alt="image" />
+        </div>
+        : <div className="text-black bg-gray-200 rounded-2xl p-10 text-center font-extrabold"></div>}
+      <div className="text-black text-center font-semibold uppercase">TYPE:</div>
+      <div>
+        <ul>
+          {types?.map((post: any) => (
+            <li key={post.type.name} className="text-black text-center font-medium uppercase">{post.type.name}</li>
+          ))}
+        </ul>
+        <ul>
+          {isVisible == true && (
+            <>
               <div
-                data-dialog="modal"
-                className="relative flex flex-col w-full sm:max-w-[90%] md:max-w-[70%] lg:max-w-[40%] max-h-[90vh] rounded-lg bg-white shadow-sm overflow-hidden"
+                data-dialog-backdrop="modal"
+                data-dialog-backdrop-close="true"
+                className="fixed inset-0 z-999 grid h-screen w-screen place-items-center bg-black/30 backdrop-blur-sm p-4"
               >
-                {/* Header */}
-                <div className="shrink-0 p-4 text-xl text-slate-800 uppercase text-center font-extrabold">
-                  {namePoke}
-                </div>
-
-                {/* Content - Scroll */}
-                <div className="flex-1 min-h-0 overflow-y-auto px-4">
-                  <div className="w-full py-6 flex flex-col items-center">
+                <div
+                  data-dialog="modal"
+                  className="relative flex flex-col w-full sm:max-w-[90%] md:max-w-[70%] lg:max-w-[40%] max-h-[90vh] rounded-lg bg-white shadow-sm overflow-hidden"
+                >
+                  {/* Header */}
+                  <div className="shrink-0 p-4 text-xl text-slate-800 uppercase text-center font-extrabold">
+                    {namePoke}
                   </div>
 
-                  <div className="border-t border-slate-200 py-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                      {stats.map((post: any) => (
-                        <div key={post.stat.name} className="min-w-0">
-                          <div className="text-black uppercase font-extrabold text-sm text-center">
-                            {post.stat.name.replace(/-/g, " ")}
-                          </div>
+                  {/* Content - Scroll */}
+                  <div className="flex-1 min-h-0 overflow-y-auto px-4">
+                    <div className="w-full py-6 flex flex-col items-center">
+                    </div>
 
-                          <div className="text-black text-center uppercase font-extrabold bg-amber-600 p-4 m-1 rounded-2xl">
-                            {post.base_stat}
+                    <div className="border-t border-slate-200 py-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        {stats.map((post: any) => (
+                          <div key={post.stat.name} className="min-w-0">
+                            <div className="text-black uppercase font-extrabold text-sm text-center">
+                              {post.stat.name.replace(/-/g, " ")}
+                            </div>
+
+                            <div className="text-black text-center uppercase font-extrabold bg-amber-600 p-4 m-1 rounded-2xl">
+                              {post.base_stat}
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Footer - Always Visible */}
-                <div className="shrink-0 flex justify-end border-t border-slate-200 bg-white p-4">
-                  <button
-                    onClick={CloseToggleStats}
-                    data-dialog-close="true"
-                    className="rounded-md py-2 px-4 font-extrabold text-slate-600 transition-all hover:bg-slate-100"
-                    type="button"
-                  >
-                    Tutup
-                  </button>
+                  {/* Footer - Always Visible */}
+                  <div className="shrink-0 flex justify-end border-t border-slate-200 bg-white p-4">
+                    <button
+                      onClick={CloseToggleStats}
+                      data-dialog-close="true"
+                      className="rounded-md py-2 px-4 font-extrabold text-slate-600 transition-all hover:bg-slate-100"
+                      type="button"
+                    >
+                      Tutup
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </>
-        )}
-      </ul>
+            </>
+          )}
+        </ul>
+      </div>
     </div>
-  </div>
-);
+  );
 }

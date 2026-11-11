@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import PokemonPageDetails from "./pokemonPageDetails";
+import TemplateBox from "./templateBox";
 
 interface Pokemon {
     name: string;
@@ -47,7 +48,6 @@ export default function PokemonPage() {
             .then(response => response.json())
             .then(data => setData(data.results))
             .catch(error => console.error("Fetch error:", error));
-
     }, [pokeNumber]);
 
 
@@ -63,11 +63,11 @@ export default function PokemonPage() {
     useEffect(() => {
         const keyword = debouncedSearch.trim().toLowerCase();
 
-        if (!keyword) {
-            setPokeFilter([]);
-            setIsWaiting(false);
-            return;
-        }
+        // if (!keyword) {
+        //     setPokeFilter([]);
+        //     setIsWaiting(false);
+        //     return;
+        // }
 
         setIsWaiting(true);
 
@@ -80,7 +80,6 @@ export default function PokemonPage() {
             setIsWaiting(false);
         }, 500);
 
-        // Batalkan timer jika keyword berubah
         return () => clearTimeout(timer);
 
     }, [debouncedSearch, allPokes]);
@@ -135,23 +134,33 @@ export default function PokemonPage() {
                     )}
                 </>
             ) : (
-                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1 p-4 sm:p-6 lg:p-10">
-                    {pokes.map((post) => (
-                        <li
-                            className="bg-gray-100 p-6 rounded-2xl m-2 transition delay-100 duration-150 ease-in-out hover:bg-gray-300"
-                            key={post.name}
-                        >
-                            <div className="text-black text-center font-extrabold uppercase">
-                                {post.name}
-                            </div>
+                <>
+                    {isWaiting == false ? (
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1 p-4 sm:p-6 lg:p-10">
+                            {pokes.map((post) => (
+                                <li
+                                    className="bg-gray-100 p-6 rounded-2xl m-2 transition delay-100 duration-150 ease-in-out hover:bg-gray-300"
+                                    key={post.name}
+                                >
+                                    <div className="text-black text-center font-extrabold uppercase">
+                                        {post.name}
+                                    </div>
 
-                            <PokemonPageDetails
-                                urlDetailsPoke={post.url}
-                                namePoke={post.name}
-                            />
-                        </li>
-                    ))}
-                </ul>
+                                    <PokemonPageDetails
+                                        urlDetailsPoke={post.url}
+                                        namePoke={post.name}
+                                    />
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <Skeleton />
+                    )
+
+                    }
+                </>
+
+
             )}
 
             <div className="container py-10 px-10 mx-0 min-w-full flex flex-col items-center">
@@ -170,19 +179,67 @@ export default function PokemonPage() {
 
 function Skeleton() {
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1 p-4 sm:p-6 lg:p-10">
-            <div className="m-2 rounded-xl bg-gray-100 p-2 h-72"></div>
-            <div className="m-2 rounded-xl bg-gray-100 p-2 h-72"></div>
-            <div className="m-2 rounded-xl bg-gray-100 p-2 h-72"></div>
-            <div className="m-2 rounded-xl bg-gray-100 p-2 h-72"></div>
-            <div className="m-2 rounded-xl bg-gray-100 p-2 h-72"></div>
-            <div className="m-2 rounded-xl bg-gray-100 p-2 h-72"></div>
-            <div className="m-2 rounded-xl bg-gray-100 p-2 h-72"></div>
-            <div className="m-2 rounded-xl bg-gray-100 p-2 h-72"></div>
-            <div className="m-2 rounded-xl bg-gray-100 p-2 h-72"></div>
-            <div className="m-2 rounded-xl bg-gray-100 p-2 h-72"></div>
-            <div className="m-2 rounded-xl bg-gray-100 p-2 h-72"></div>
-            <div className="m-2 rounded-xl bg-gray-100 p-2 h-72"></div>
-        </div>
+        <>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1 p-4 sm:p-6 lg:p-10">
+                <li className="bg-gray-100 p-8 rounded-2xl m-2 flex flex-col items-center">
+                    <div className="bg-gray-300 rounded-2xl w-36 h-5 mb-3" />
+                    <div className="bg-gray-300 rounded-2xl w-full aspect-square mb-3" />
+                    <div className="bg-gray-300 rounded-2xl w-24 h-5 mb-2" />
+                    <div className="bg-gray-300 rounded-2xl w-20 h-5 mb-2" />
+                    <div className="bg-gray-300 rounded-2xl w-20 h-5 mb-2" />
+                </li>
+                <li className="bg-gray-100 p-8 rounded-2xl m-2 flex flex-col items-center">
+                    <div className="bg-gray-300 rounded-2xl w-36 h-5 mb-3" />
+                    <div className="bg-gray-300 rounded-2xl w-full aspect-square mb-3" />
+                    <div className="bg-gray-300 rounded-2xl w-24 h-5 mb-2" />
+                    <div className="bg-gray-300 rounded-2xl w-20 h-5 mb-2" />
+                    <div className="bg-gray-300 rounded-2xl w-20 h-5 mb-2" />
+                </li>
+                <li className="bg-gray-100 p-8 rounded-2xl m-2 flex flex-col items-center">
+                    <div className="bg-gray-300 rounded-2xl w-36 h-5 mb-3" />
+                    <div className="bg-gray-300 rounded-2xl w-full aspect-square mb-3" />
+                    <div className="bg-gray-300 rounded-2xl w-24 h-5 mb-2" />
+                    <div className="bg-gray-300 rounded-2xl w-20 h-5 mb-2" />
+                    <div className="bg-gray-300 rounded-2xl w-20 h-5 mb-2" />
+                </li>
+                <li className="bg-gray-100 p-8 rounded-2xl m-2 flex flex-col items-center">
+                    <div className="bg-gray-300 rounded-2xl w-36 h-5 mb-3" />
+                    <div className="bg-gray-300 rounded-2xl w-full aspect-square mb-3" />
+                    <div className="bg-gray-300 rounded-2xl w-24 h-5 mb-2" />
+                    <div className="bg-gray-300 rounded-2xl w-20 h-5 mb-2" />
+                    <div className="bg-gray-300 rounded-2xl w-20 h-5 mb-2" />
+                </li>
+                <li className="bg-gray-100 p-8 rounded-2xl m-2 flex flex-col items-center">
+                    <div className="bg-gray-300 rounded-2xl w-36 h-5 mb-3" />
+                    <div className="bg-gray-300 rounded-2xl w-full aspect-square mb-3" />
+                    <div className="bg-gray-300 rounded-2xl w-24 h-5 mb-2" />
+                    <div className="bg-gray-300 rounded-2xl w-20 h-5 mb-2" />
+                    <div className="bg-gray-300 rounded-2xl w-20 h-5 mb-2" />
+                </li>
+                <li className="bg-gray-100 p-8 rounded-2xl m-2 flex flex-col items-center">
+                    <div className="bg-gray-300 rounded-2xl w-36 h-5 mb-3" />
+                    <div className="bg-gray-300 rounded-2xl w-full aspect-square mb-3" />
+                    <div className="bg-gray-300 rounded-2xl w-24 h-5 mb-2" />
+                    <div className="bg-gray-300 rounded-2xl w-20 h-5 mb-2" />
+                    <div className="bg-gray-300 rounded-2xl w-20 h-5 mb-2" />
+                </li>
+                <li className="bg-gray-100 p-8 rounded-2xl m-2 flex flex-col items-center">
+                    <div className="bg-gray-300 rounded-2xl w-36 h-5 mb-3" />
+                    <div className="bg-gray-300 rounded-2xl w-full aspect-square mb-3" />
+                    <div className="bg-gray-300 rounded-2xl w-24 h-5 mb-2" />
+                    <div className="bg-gray-300 rounded-2xl w-20 h-5 mb-2" />
+                    <div className="bg-gray-300 rounded-2xl w-20 h-5 mb-2" />
+                </li>
+                <li className="bg-gray-100 p-8 rounded-2xl m-2 flex flex-col items-center">
+                    <div className="bg-gray-300 rounded-2xl w-36 h-5 mb-3" />
+                    <div className="bg-gray-300 rounded-2xl w-full aspect-square mb-3" />
+                    <div className="bg-gray-300 rounded-2xl w-24 h-5 mb-2" />
+                    <div className="bg-gray-300 rounded-2xl w-20 h-5 mb-2" />
+                    <div className="bg-gray-300 rounded-2xl w-20 h-5 mb-2" />
+                </li>
+            </ul>
+
+        </>
+
     );
 }
